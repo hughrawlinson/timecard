@@ -94,10 +94,12 @@ timecard.prototype = {
         }
         shift.find({
             startTime:{
-                $gte:startTime
+                $gte:startTime,
+                $lt:endTime
             },
             endTime:{
-                $gte:startTime
+                $gte:startTime,
+                $lt:endTime
             }
         },function(err, doc){
             if(err){
@@ -109,7 +111,7 @@ timecard.prototype = {
                 });
             }
             else{
-                console.log('Range: '+startTime);
+                console.log('Range: '+startTime+' - '+endTime);
                 res.json({
                     'success': true,
                     'data': doc
