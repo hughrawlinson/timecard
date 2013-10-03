@@ -1,0 +1,59 @@
+doctype 5
+html(lang='en')
+	head
+		link(href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css", rel="stylesheet")
+		title=pageTitle
+	body
+		div.container
+			div.row
+				div.col-lg-12.col-md-12
+					h1#title=pageTitle
+			hr
+			div.row
+				div.col-lg-6.col-lg-offset-3.col-md-8.col-md-offset-2
+					div#alerts
+					div#ractiveHook
+						div.jumbotron
+							div.container
+								h1
+									|Hello you
+								button.btn.btn-primary(disabled)
+									|Punch In...
+			div.row
+				div.col-lg-12
+					hr
+					p.text-muted
+						|Lovingly hacked together by 
+						a(href="http://twitter.com/@hughrawlinson")
+							@hughrawlinson
+						|.
+
+		script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
+		script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")
+		script(src="/js/Ractive.min.js")
+		script#template(type="text/ractive")
+			{{^user}}
+			div.jumbotron
+				div.container
+					h1
+						|{{contentTitle}}
+					button.btn.btn-primary(onclick="logIn()")
+						|Identify
+			{{/user}}
+			{{#user}}
+			div.panel.panel-default
+				div.panel-heading
+					h3.panel-title
+						|Hello {{user.firstName}}
+				div.panel-body
+					h1
+						|{{contentTitle}}
+					{{^contentBody}}
+					p.text-muted
+						| {{contentBody}}
+					{{/contentBody}}
+				div.panel-footer
+					button.btn.btn-danger.btn-sm(onclick="logOut()")
+						|Make it stop
+			{{/user}}
+		script(src="/js/script.js")
