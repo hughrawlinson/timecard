@@ -14,7 +14,7 @@ block content
 			
 
 block scripts
-	script(src="//cdnjs.cloudflare.com/ajax/libs/ractive.js/0.3.6/ractive.js")
+	script(src="//cdnjs.cloudflare.com/ajax/libs/ractive.js/0.3.6/ractive.min.js")
 	script#template(type="text/ractive")
 		{{^user}}
 		div.jumbotron
@@ -41,4 +41,6 @@ block scripts
 					|Make it stop
 		{{/user}}
 	script
-		initInputPage();
+		$(document).ready(function(){
+			initInputPage();
+		});

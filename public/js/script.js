@@ -16,8 +16,10 @@ function pad(num, size) {
     return s.substr(s.length-size);
 }
 
+var ractive;
+
 var initInputPage = function(){
-	var ractive = new Ractive({
+	ractive = new Ractive({
 		el: '#ractiveHook',
 		template: '#template',
 		data:{
