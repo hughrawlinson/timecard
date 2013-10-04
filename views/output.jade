@@ -1,0 +1,23 @@
+extends layout
+
+block link
+	-var selected = 'Output'; //default
+
+block content
+	div.row
+		div.col-sm-12
+			canvas#display(style="width: 100% !important; height: auto !important;")
+
+block scripts
+	script(src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js")
+	script
+		$(document).ready(function(){
+			var t = new Date();
+			t.setDate(t.getDate() - 7);
+			$.ajax({
+				url:'/range/'+t
+			}).done(function(d){
+				d = parseDataToChart(d);
+				display(d);
+			});
+		});

@@ -1,0 +1,38 @@
+doctype 5
+html(lang='en')
+	head
+		link(href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css", rel="stylesheet")
+		title=pageTitle
+		block head
+
+		block link
+			-var selected = 'Input'; //default
+
+		-var menu = { 'Input': '/', 'Output': '/output'};
+	body
+		div.container
+			div.row
+				div.col-sm-6
+					div.container
+						div.row
+							div.col-sm-12
+								h1#title
+									| Timecard 
+									small=pageTitle
+				div.col-sm-6
+					div.container(style="margin-top:20px;")
+						div.row
+							div.col-sm-4.col-sm-offset-8
+								ul.nav.nav-pills
+									each val, key in menu
+										if selected === key
+											li.active
+												a(href=val, title=key)= key
+										else
+											li
+												a(href=val, title=key)= key
+			hr
+			block content
+			include partials/footer
+		include partials/scripts
+		block scripts
