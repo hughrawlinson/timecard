@@ -83,30 +83,44 @@ var logOut = function(){
 	});
 };
 
+var arr = [];
+
 var parseDataToChart = function(data){
-	var d = {};
-	d.labels = [];
-	d.datasets = [];
-	d.datasets[0] = {
+	var da = {};
+	da.labels = [];
+	da.datasets = [];
+	da.datasets[0] = {
 		fillColor : 'rgba(66,139,202,0.5)',
 		strokeColor : 'rgba(66,139,202,1)',
 		pointColor : 'rgba(66,139,202,1)',
 		data: []
 	};
-	var i = 0;
-	d.labels = weekday;
-	d.datasets[0].data = [4,4,5,5,4,4,5]
-	// while(i < data.length){
-	// 	var dayTotal = 0;
-	// 	if(data[i+1] !== undefined && new Date(data[i+1].startTime).getDate() < new Date(data[i].startTime).getDate()+1){
-	// 		dayTotal += new Date(data[i].endTime).getHours(); - new Date(data[i].startTime).getHours();
-	// 	}
-	// 	d.labels.push(weekday[new Date(data[i].startTime).getDay()]);
-	// 	d.datasets[0].data.push(dayTotal);
-	// }
-	console.log(d);
-	return d;
-}
+	for(var i = 0; i < data.data.length; i++){
+		arr.push({
+			day: new Date(data.data[i].startTime).getDay(),
+			duration:(new Date(data.data[i].endTime).getHours() +
+				new Date(data.data[i].endTime).getMinutes()/60 +
+				new Date(data.data[i].endTime).getSeconds()/3600)-
+				(new Date(data.data[i].startTime).getHours() +
+				new Date(data.data[i].startTime).getMinutes()/60 +
+				new Date(data.data[i].endTime).getSeconds()/3600)
+		});
+	}
+	var i = undefined;
+	var totals = [];
+	for(var i = 0 + new Date().getDay()%7; i < 7 + new Date().getDay()%7; i++){
+		var daysShifts = $.grep(arr, function(e){ return e.day === i%7; });
+		totals[i%7] = 0;
+		for(var n = 0; n < daysShifts.length; n++){
+			totals[i%7] += daysShifts[n].duration;
+		}
+		da.labels.push(weekday[i%7]);
+	}
+	console.log(totals);
+	da.datasets[0].data = totals;
+	console.log(da);
+	return da;
+};
 
 var displayChart = null;
 
@@ -133,6 +147,11 @@ var display = function(data){
 	}
 	var ctx = document.getElementById('display').getContext('2d');
 	displayChart = new Chart(ctx).Line(data,options);
+	var totalTime = 0;
+	for(var i = 0; i < data.datasets[0].data.length; i++){
+		totalTime += data.datasets[0].data[i];
+	}
+	$('#totalHours').text(totalTime.toFixed(2));
 };
 
 console.log('Using the in browser JS console, Johnny Nomates?');
