@@ -125,12 +125,18 @@ var tc = new timecard();
 
 app.get('/', function(req, res) {
     res.render('index', {
-        'pageTitle': app.get('title'),
+        'pageTitle': 'input',
         'text': 'test'
     });
 });
 
-app.get('/api/punchIn', function(req, res) {
+app.get('/output', function(req, res) {
+    res.render('output', {
+        'pageTitle': 'output'
+    });
+});
+
+app.put('/api/punchIn', function(req, res) {
     tc.punchIn(app, res);
 });
 
@@ -142,7 +148,7 @@ app.get('/range/:st/:et', function(req,res){
     tc.range(res, req.params.st, req.params.et);
 });
 
-app.get('/api/punchOut/:id', function(req, res) {
+app.post('/api/punchOut/:id', function(req, res) {
     tc.punchOut(app, res, req.params.id);
 });
 
