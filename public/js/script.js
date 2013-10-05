@@ -1,5 +1,16 @@
 'use strict';
 
+var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+// a and b are javascript Date objects
+function absDateDiffInDays(a, b) {
+	// Discard the time and time-zone information.
+	var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+	var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+	return Math.abs(Math.floor((utc2 - utc1) / _MS_PER_DAY));
+}
+
 var weekday=new Array(7);
 weekday[0]='Sunday';
 weekday[1]='Monday';
@@ -98,6 +109,7 @@ var parseDataToChart = function(data){
 		data: []
 	};
 	for(var i = 0; i < data.data.length; i++){
+
 		arr.push({
 			day: new Date(data.data[i].startTime).getDay(),
 			duration:(new Date(data.data[i].endTime).getHours() +
@@ -105,7 +117,9 @@ var parseDataToChart = function(data){
 				new Date(data.data[i].endTime).getSeconds()/3600)-
 				(new Date(data.data[i].startTime).getHours() +
 				new Date(data.data[i].startTime).getMinutes()/60 +
-				new Date(data.data[i].endTime).getSeconds()/3600)
+				new Date(data.data[i].endTime).getSeconds()/3600)+
+				24*absDateDiffInDays(new Date(data.data[i].startTime),
+				new Date(data.data[i].endTime))
 		});
 	}
 	var i = undefined;
