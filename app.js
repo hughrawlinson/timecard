@@ -4,10 +4,13 @@ var express = require('express'),
     mongoose = require('mongoose'),
     APP_PORT = 8080;
 
-mongoose.connect('mongodb://localhost/timecard');
-
+mongoose.connect('mongodb://localhost/timecard', function(err) {
+    if (err) {
+        console.log('Connection to DB failed');
+        throw err;
+    };
+});
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback() {
     console.log('Connection open to local database');
 });

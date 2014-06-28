@@ -130,7 +130,7 @@ var parseDataToChart = function(data){
 		for(var n = 0; n < daysShifts.length; n++){
 			totals[i%7] += daysShifts[n].duration;
 		}
-		da.labels.push(weekday[i%7]);
+		da.labels.push(weekday[i-1%7]);
 	}
 	console.log(totals);
 	da.datasets[0].data = totals;
