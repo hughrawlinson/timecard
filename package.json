@@ -4,7 +4,7 @@
   "dependencies": {},
   "devDependencies": {
     "express": "~5.0.0-alpha.3",
-    "mongoose": "~4.9.2",
+    "mongoose": "~5.3.5",
     "requirejs": "2.3.2",
     "jade": "*"
   },
